@@ -1,0 +1,217 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Oondoo App Store</title>
+
+    <!-- Import font Raleway Medium -->
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@500&display=swap" rel="stylesheet">
+    <!-- Import font Merriweather Sans ExtraBold -->
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather+Sans:wght@800&display=swap" rel="stylesheet">
+
+    <style>
+      html, body {
+        height: 100%;
+        margin: 0;
+      }
+
+      body {
+        background-color: #33AEDB;
+        font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      }
+
+      .center {
+        min-height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .note {
+        position: absolute;
+        color: rgba(255,255,255,0.95);
+        font-size: 20px;
+        opacity: 0.8;
+        text-align: center;
+        top: 530px;
+      }
+
+      /* Persegi panjang bagian atas */
+      .top-rect {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 120px;
+        background-color: #33AEDB;
+        box-shadow: 0px 4px 10px rgba(0,0,0,0.3);
+        z-index: 10;
+      }
+
+      /* Tulisan "oondoo" */
+      .logo-text {
+        position: absolute;
+        left: 70px;
+        top: 25px;
+        font-family: "Raleway", sans-serif;
+        font-weight: 800; /* ExtraBold */
+        font-size: 64px;
+        color: white;
+        z-index: 11;
+        user-select: none;
+      }
+
+      /* Tulisan "from terastudio" */
+      .subtext {
+        position: absolute;
+        left: 315px;
+        top: 60px;
+        font-family: "Raleway", sans-serif;
+        font-weight: 300; /* Light */
+        font-size: 24px;
+        color: white;
+        z-index: 11;
+        user-select: none;
+      }
+
+      /* Tombol gambar setting */
+      .setting-btn {
+        position: absolute;
+        left: 1110px;
+        top: 40px;
+        width: 48px;
+        height: 48px;
+        background: none;
+        border: none;
+        padding: 0;
+        cursor: pointer;
+        z-index: 12;
+        transition: 0.25s ease;
+      }
+
+      .setting-btn img {
+        width: 48px;
+        height: 48px;
+        pointer-events: none;
+      }
+
+      .setting-btn:hover {
+        transform: rotate(6deg) scale(1.15);  /* berputar & membesar sedikit */
+      }
+
+      .big-text {
+        position: absolute;
+        left: 80px;
+        top: 150px;
+        width: 100%;
+        font-family: "Merriweather Sans", sans-serif;
+        font-size: 40px;
+        font-weight: 800;
+        color: white;
+        user-select: none;
+      }
+
+      .apps-image {
+        position: absolute;
+        left: 800px;
+        top: 160px;
+        width: 300px;
+        height: 300px;
+        user-select: none;
+        pointer-events: none;
+        opacity: 0.5;
+      }
+
+      .language-box {
+        position: absolute;
+        left: 80px;
+        top: 250px;
+        font-size: 22px;
+        color: white;
+        font-family: "Raleway", sans-serif;
+      }
+
+      .language-select {
+        margin-top: 10px;
+        padding: 10px 16px;
+        font-size: 18px;
+        border-radius: 12px;
+        border: none;
+        outline: none;
+        background: white;
+        cursor: pointer;
+      }
+    </style>
+  </head>
+
+  <body>
+    <img src="apps-purple.png" 
+     class="apps-image" 
+     alt="Apps Purple" />
+    <div class="top-rect"></div>
+    <div class="logo-text">oondoo</div>
+    <div class="subtext" id="subtext">from terastudio</div>
+    <button class="setting-btn" onclick="location.href='index.html'">
+      <img src="home1.png" alt="Setting" />
+    </button>
+
+    <div class="big-text" id="title-settings">Settings</div>
+
+    <!-- MENU BAHASA -->
+    <div class="language-box">
+      <span id="label-language">Language / Bahasa:</span>
+      <br>
+      <select class="language-select" id="langSelect" onchange="changeLanguage()">
+        <option value="id">Indonesian</option>
+        <option value="en">English</option>
+      </select>
+    </div>
+
+    <div style="position:absolute; left:0; width:100%; height:80px; top:500px; background:#3297BC; display:flex; justify-content:center; align-items:center;">
+    </div>
+
+    <div class="center">
+      <div class="note" id="version-text">Oondoo App Store version 1.26.0</div>
+    </div>
+
+    <script>
+      // DATA TERJEMAHAN
+      const langData = {
+        id: {
+          settings: "Pengaturan",
+          fromTerastudio: "dari terastudio",
+          language: "Bahasa:",
+          version: "Oondoo App Store versi 1.26.0"
+        },
+        en: {
+          settings: "Settings",
+          fromTerastudio: "from terastudio",
+          language: "Language:",
+          version: "Oondoo App Store version 1.26.0"
+        }
+      };
+
+      // FUNGSI UBAH BAHASA
+      function applyLanguage(lang) {
+        document.getElementById("title-settings").textContent = langData[lang].settings;
+        document.getElementById("subtext").textContent = langData[lang].fromTerastudio;
+        document.getElementById("label-language").textContent = langData[lang].language;
+        document.getElementById("version-text").textContent = langData[lang].version;
+      }
+
+      function changeLanguage() {
+        const lang = document.getElementById("langSelect").value;
+        localStorage.setItem("oondoo-language", lang);
+        applyLanguage(lang);
+      }
+
+      // LOAD BAHASA SAAT PERTAMA BUKA
+      window.onload = () => {
+        const savedLang = localStorage.getItem("oondoo-language") || "id";
+        document.getElementById("langSelect").value = savedLang;
+        applyLanguage(savedLang);
+      };
+    </script>
+  </body>
+</html>
